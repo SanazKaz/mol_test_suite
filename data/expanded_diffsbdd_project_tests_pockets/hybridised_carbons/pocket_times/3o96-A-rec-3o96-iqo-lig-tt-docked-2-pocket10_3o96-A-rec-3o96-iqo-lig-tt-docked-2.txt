@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3o96-A-rec-3o96-iqo-lig-tt-docked-2-pocket10_3o96-A-rec-3o96-iqo-lig-tt-docked-2.sdf 81.81359100341797

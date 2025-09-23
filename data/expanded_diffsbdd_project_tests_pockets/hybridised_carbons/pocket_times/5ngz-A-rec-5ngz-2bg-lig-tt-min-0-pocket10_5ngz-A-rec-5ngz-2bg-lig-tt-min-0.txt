@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/5ngz-A-rec-5ngz-2bg-lig-tt-min-0-pocket10_5ngz-A-rec-5ngz-2bg-lig-tt-min-0.sdf 26.44436740875244

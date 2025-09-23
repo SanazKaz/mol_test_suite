@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/5bur-A-rec-5x8f-amp-lig-tt-docked-7-pocket10_5bur-A-rec-5x8f-amp-lig-tt-docked-7.sdf 50.949923515319824

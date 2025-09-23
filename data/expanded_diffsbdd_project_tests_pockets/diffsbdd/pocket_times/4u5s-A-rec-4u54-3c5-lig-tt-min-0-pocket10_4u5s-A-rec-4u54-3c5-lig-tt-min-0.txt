@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4u5s-A-rec-4u54-3c5-lig-tt-min-0-pocket10_4u5s-A-rec-4u54-3c5-lig-tt-min-0.sdf 25.31695294380188

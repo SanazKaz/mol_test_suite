@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4tqr-A-rec-2xca-doc-lig-tt-min-0-pocket10_4tqr-A-rec-2xca-doc-lig-tt-min-0.sdf 18.79900050163269

@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/3daf-A-rec-3daf-feg-lig-tt-docked-0-pocket10_3daf-A-rec-3daf-feg-lig-tt-docked-0.sdf 85.01413416862488

@@ -1,0 +1,9 @@
+Check,Failure Count
+bond_angles,4365
+bond_lengths,3672
+internal_steric_clash,2114
+all_atoms_connected,1831
+non-aromatic_ring_non-flatness,143
+double_bond_flatness,104
+aromatic_ring_flatness,24
+inchi_convertible,1

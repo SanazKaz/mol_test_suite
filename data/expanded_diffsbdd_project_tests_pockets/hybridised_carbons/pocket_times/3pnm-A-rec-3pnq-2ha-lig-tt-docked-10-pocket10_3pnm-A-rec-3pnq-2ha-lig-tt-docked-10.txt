@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3pnm-A-rec-3pnq-2ha-lig-tt-docked-10-pocket10_3pnm-A-rec-3pnq-2ha-lig-tt-docked-10.sdf 36.50533175468445

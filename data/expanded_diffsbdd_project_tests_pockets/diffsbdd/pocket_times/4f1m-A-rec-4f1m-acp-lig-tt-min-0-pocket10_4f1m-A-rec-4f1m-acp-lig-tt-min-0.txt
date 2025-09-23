@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4f1m-A-rec-4f1m-acp-lig-tt-min-0-pocket10_4f1m-A-rec-4f1m-acp-lig-tt-min-0.sdf 53.044902086257935

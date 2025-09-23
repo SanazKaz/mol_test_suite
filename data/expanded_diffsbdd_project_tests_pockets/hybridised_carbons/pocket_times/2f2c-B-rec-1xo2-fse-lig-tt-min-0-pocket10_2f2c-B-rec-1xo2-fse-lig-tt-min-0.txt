@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2f2c-B-rec-1xo2-fse-lig-tt-min-0-pocket10_2f2c-B-rec-1xo2-fse-lig-tt-min-0.sdf 40.51678466796875

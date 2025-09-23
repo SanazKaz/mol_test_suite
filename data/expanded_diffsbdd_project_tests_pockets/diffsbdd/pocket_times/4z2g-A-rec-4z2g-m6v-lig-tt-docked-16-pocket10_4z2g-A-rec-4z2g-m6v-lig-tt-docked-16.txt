@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4z2g-A-rec-4z2g-m6v-lig-tt-docked-16-pocket10_4z2g-A-rec-4z2g-m6v-lig-tt-docked-16.sdf 77.31115818023682

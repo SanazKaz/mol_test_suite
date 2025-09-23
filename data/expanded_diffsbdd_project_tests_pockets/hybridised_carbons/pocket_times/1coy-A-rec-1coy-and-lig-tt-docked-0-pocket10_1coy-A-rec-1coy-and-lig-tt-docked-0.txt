@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1coy-A-rec-1coy-and-lig-tt-docked-0-pocket10_1coy-A-rec-1coy-and-lig-tt-docked-0.sdf 49.29157829284668

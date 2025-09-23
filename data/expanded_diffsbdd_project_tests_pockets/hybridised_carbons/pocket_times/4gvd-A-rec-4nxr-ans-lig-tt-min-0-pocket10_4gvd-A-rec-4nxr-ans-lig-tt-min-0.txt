@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4gvd-A-rec-4nxr-ans-lig-tt-min-0-pocket10_4gvd-A-rec-4nxr-ans-lig-tt-min-0.sdf 21.903030157089233

@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4keu-A-rec-4ket-pg4-lig-tt-min-0-pocket10_4keu-A-rec-4ket-pg4-lig-tt-min-0.sdf 56.563390493392944

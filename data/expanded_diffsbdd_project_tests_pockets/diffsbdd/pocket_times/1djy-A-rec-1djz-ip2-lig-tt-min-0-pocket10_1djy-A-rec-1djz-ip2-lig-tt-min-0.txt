@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/1djy-A-rec-1djz-ip2-lig-tt-min-0-pocket10_1djy-A-rec-1djz-ip2-lig-tt-min-0.sdf 41.801478147506714

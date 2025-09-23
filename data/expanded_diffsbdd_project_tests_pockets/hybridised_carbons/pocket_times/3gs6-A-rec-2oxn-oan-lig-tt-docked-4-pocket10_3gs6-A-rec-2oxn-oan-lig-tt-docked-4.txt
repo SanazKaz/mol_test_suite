@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3gs6-A-rec-2oxn-oan-lig-tt-docked-4-pocket10_3gs6-A-rec-2oxn-oan-lig-tt-docked-4.sdf 46.039400815963745

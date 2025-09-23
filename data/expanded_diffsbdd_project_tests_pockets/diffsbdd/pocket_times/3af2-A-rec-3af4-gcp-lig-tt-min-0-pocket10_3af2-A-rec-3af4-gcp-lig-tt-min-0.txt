@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/3af2-A-rec-3af4-gcp-lig-tt-min-0-pocket10_3af2-A-rec-3af4-gcp-lig-tt-min-0.sdf 58.88833236694336

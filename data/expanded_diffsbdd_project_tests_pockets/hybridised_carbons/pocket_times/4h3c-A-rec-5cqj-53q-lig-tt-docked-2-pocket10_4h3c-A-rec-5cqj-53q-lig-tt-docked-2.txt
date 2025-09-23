@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4h3c-A-rec-5cqj-53q-lig-tt-docked-2-pocket10_4h3c-A-rec-5cqj-53q-lig-tt-docked-2.sdf 38.34570598602295

@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/2rma-A-rec-3rdd-ea4-lig-tt-docked-0-pocket10_2rma-A-rec-3rdd-ea4-lig-tt-docked-0.sdf 53.83006048202515

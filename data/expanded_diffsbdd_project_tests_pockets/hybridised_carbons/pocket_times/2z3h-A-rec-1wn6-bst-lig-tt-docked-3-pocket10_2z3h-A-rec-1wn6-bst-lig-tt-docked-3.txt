@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2z3h-A-rec-1wn6-bst-lig-tt-docked-3-pocket10_2z3h-A-rec-1wn6-bst-lig-tt-docked-3.sdf 66.19156980514526

@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/3ej8-A-rec-2nsi-itu-lig-tt-min-0-pocket10_3ej8-A-rec-2nsi-itu-lig-tt-min-0.sdf 23.947089433670044

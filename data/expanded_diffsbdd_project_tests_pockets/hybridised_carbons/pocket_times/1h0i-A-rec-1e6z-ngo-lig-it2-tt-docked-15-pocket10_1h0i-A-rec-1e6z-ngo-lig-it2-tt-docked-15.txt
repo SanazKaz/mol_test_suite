@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1h0i-A-rec-1e6z-ngo-lig-it2-tt-docked-15-pocket10_1h0i-A-rec-1e6z-ngo-lig-it2-tt-docked-15.sdf 45.458627700805664

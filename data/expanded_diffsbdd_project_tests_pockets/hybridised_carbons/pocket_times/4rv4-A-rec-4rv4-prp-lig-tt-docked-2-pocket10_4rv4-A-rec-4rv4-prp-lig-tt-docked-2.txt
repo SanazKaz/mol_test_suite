@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4rv4-A-rec-4rv4-prp-lig-tt-docked-2-pocket10_4rv4-A-rec-4rv4-prp-lig-tt-docked-2.sdf 36.87320256233215

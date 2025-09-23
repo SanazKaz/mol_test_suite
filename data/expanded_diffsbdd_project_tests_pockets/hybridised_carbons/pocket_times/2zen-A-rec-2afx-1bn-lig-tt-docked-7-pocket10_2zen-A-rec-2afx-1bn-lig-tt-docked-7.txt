@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2zen-A-rec-2afx-1bn-lig-tt-docked-7-pocket10_2zen-A-rec-2afx-1bn-lig-tt-docked-7.sdf 34.988685131073

@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4tos-A-rec-4tos-355-lig-tt-min-0-pocket10_4tos-A-rec-4tos-355-lig-tt-min-0.sdf 78.7956051826477

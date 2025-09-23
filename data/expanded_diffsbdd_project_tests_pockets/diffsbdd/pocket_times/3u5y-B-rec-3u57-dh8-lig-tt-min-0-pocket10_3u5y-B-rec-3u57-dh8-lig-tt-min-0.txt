@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/3u5y-B-rec-3u57-dh8-lig-tt-min-0-pocket10_3u5y-B-rec-3u57-dh8-lig-tt-min-0.sdf 64.33246564865112

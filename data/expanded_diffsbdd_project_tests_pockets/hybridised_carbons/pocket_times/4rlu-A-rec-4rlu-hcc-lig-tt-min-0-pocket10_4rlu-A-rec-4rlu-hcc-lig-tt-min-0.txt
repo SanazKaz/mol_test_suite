@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4rlu-A-rec-4rlu-hcc-lig-tt-min-0-pocket10_4rlu-A-rec-4rlu-hcc-lig-tt-min-0.sdf 64.28842306137085

@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/14gs-A-rec-20gs-cbd-lig-tt-min-0-pocket10_14gs-A-rec-20gs-cbd-lig-tt-min-0.sdf 31.8595974445343

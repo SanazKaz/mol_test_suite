@@ -1,0 +1,6 @@
+[submodule "repos/silly_walks"]
+	path = repos/silly_walks
+	url = https://github.com/PatWalters/silly_walks
+[submodule "repos/SuCOS"]
+	path = repos/SuCOS
+	url = https://github.com/MarcMoesser/SuCOS

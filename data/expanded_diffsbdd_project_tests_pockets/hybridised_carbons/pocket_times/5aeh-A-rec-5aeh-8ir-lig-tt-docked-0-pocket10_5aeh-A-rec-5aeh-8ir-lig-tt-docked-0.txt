@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/5aeh-A-rec-5aeh-8ir-lig-tt-docked-0-pocket10_5aeh-A-rec-5aeh-8ir-lig-tt-docked-0.sdf 54.378246545791626

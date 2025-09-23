@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4qlk-A-rec-4qlk-ctt-lig-tt-docked-0-pocket10_4qlk-A-rec-4qlk-ctt-lig-tt-docked-0.sdf 105.63657855987549

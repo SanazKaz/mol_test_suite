@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3li4-A-rec-2gvv-di9-lig-tt-min-0-pocket10_3li4-A-rec-2gvv-di9-lig-tt-min-0.sdf 52.93422245979309

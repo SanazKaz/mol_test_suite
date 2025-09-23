@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/2hcj-B-rec-2hcj-gdp-lig-tt-docked-0-pocket10_2hcj-B-rec-2hcj-gdp-lig-tt-docked-0.sdf 48.4165678024292

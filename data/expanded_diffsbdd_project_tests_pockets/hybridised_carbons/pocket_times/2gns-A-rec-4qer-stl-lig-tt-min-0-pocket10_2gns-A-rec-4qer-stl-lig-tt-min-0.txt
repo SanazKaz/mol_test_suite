@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2gns-A-rec-4qer-stl-lig-tt-min-0-pocket10_2gns-A-rec-4qer-stl-lig-tt-min-0.sdf 20.41290283203125

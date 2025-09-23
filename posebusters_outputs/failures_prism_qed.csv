@@ -1,0 +1,11 @@
+Check,Failure Count
+bond_lengths,12
+bond_angles,12
+internal_steric_clash,3
+double_bond_flatness,2
+aromatic_ring_flatness,1
+non-aromatic_ring_non-flatness,1
+mol_pred_loaded,0
+sanitization,0
+inchi_convertible,0
+all_atoms_connected,0

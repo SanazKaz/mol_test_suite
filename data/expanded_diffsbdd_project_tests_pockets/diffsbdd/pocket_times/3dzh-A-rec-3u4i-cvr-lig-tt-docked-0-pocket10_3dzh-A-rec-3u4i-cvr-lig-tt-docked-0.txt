@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/3dzh-A-rec-3u4i-cvr-lig-tt-docked-0-pocket10_3dzh-A-rec-3u4i-cvr-lig-tt-docked-0.sdf 73.55408883094788

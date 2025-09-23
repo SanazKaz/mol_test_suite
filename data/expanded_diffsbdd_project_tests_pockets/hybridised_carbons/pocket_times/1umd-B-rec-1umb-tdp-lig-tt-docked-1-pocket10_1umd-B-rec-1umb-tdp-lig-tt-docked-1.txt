@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1umd-B-rec-1umb-tdp-lig-tt-docked-1-pocket10_1umd-B-rec-1umb-tdp-lig-tt-docked-1.sdf 81.62108564376831

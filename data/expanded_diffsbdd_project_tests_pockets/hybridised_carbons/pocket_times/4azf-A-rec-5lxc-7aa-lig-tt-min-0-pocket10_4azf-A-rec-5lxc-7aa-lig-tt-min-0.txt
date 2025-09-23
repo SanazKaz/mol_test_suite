@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4azf-A-rec-5lxc-7aa-lig-tt-min-0-pocket10_4azf-A-rec-5lxc-7aa-lig-tt-min-0.sdf 58.87344479560852

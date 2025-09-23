@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2rhy-A-rec-2rhy-mlz-lig-tt-min-0-pocket10_2rhy-A-rec-2rhy-mlz-lig-tt-min-0.sdf 28.825534105300903

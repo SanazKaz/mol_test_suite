@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4g3d-B-rec-4idv-13v-lig-tt-min-0-pocket10_4g3d-B-rec-4idv-13v-lig-tt-min-0.sdf 68.18782830238342

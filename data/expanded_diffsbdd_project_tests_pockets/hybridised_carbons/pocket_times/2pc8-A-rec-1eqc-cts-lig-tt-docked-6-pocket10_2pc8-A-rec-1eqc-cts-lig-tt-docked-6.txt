@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2pc8-A-rec-1eqc-cts-lig-tt-docked-6-pocket10_2pc8-A-rec-1eqc-cts-lig-tt-docked-6.sdf 48.54819941520691

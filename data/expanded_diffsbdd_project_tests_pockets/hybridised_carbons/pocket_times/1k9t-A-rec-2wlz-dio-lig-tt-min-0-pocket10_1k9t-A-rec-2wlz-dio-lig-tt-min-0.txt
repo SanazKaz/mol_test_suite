@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1k9t-A-rec-2wlz-dio-lig-tt-min-0-pocket10_1k9t-A-rec-2wlz-dio-lig-tt-min-0.sdf 24.429656505584717

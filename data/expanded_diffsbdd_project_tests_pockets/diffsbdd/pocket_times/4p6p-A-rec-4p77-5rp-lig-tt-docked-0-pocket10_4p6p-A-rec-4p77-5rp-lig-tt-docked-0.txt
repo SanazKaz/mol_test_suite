@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4p6p-A-rec-4p77-5rp-lig-tt-docked-0-pocket10_4p6p-A-rec-4p77-5rp-lig-tt-docked-0.sdf 50.39068269729614

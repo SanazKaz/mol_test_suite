@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1ai4-A-rec-1ai5-mnp-lig-tt-docked-0-pocket10_1ai4-A-rec-1ai5-mnp-lig-tt-docked-0.sdf 46.4716899394989

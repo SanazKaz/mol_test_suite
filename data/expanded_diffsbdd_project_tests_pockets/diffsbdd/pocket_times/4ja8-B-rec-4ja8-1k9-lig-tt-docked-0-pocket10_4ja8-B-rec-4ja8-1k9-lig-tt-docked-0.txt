@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4ja8-B-rec-4ja8-1k9-lig-tt-docked-0-pocket10_4ja8-B-rec-4ja8-1k9-lig-tt-docked-0.sdf 94.42821192741394

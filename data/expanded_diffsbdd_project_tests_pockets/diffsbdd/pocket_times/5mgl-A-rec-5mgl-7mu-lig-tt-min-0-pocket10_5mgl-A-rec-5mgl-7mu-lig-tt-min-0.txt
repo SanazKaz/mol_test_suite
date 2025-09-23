@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/5mgl-A-rec-5mgl-7mu-lig-tt-min-0-pocket10_5mgl-A-rec-5mgl-7mu-lig-tt-min-0.sdf 31.60444712638855

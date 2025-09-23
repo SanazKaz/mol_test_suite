@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4iwq-A-rec-4jlc-su6-lig-tt-min-0-pocket10_4iwq-A-rec-4jlc-su6-lig-tt-min-0.sdf 45.24995803833008

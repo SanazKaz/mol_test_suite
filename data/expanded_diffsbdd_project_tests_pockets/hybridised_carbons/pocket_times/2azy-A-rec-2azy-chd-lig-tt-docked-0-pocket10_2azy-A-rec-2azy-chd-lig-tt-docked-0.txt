@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2azy-A-rec-2azy-chd-lig-tt-docked-0-pocket10_2azy-A-rec-2azy-chd-lig-tt-docked-0.sdf 52.46097707748413

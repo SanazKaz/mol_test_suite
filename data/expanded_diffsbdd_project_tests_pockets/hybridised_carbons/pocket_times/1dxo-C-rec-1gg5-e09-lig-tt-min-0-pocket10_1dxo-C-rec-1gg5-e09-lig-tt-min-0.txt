@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1dxo-C-rec-1gg5-e09-lig-tt-min-0-pocket10_1dxo-C-rec-1gg5-e09-lig-tt-min-0.sdf 26.662068605422974

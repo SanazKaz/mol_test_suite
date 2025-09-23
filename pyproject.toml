@@ -1,0 +1,7 @@
+[project]
+name = "molecular_suite"
+version = "0.0.1"
+dependencies = ["rdkit"]
+
+[tool.setuptools]
+packages = ["src"]

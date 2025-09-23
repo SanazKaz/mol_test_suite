@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4iiy-A-rec-3tle-gsu-lig-tt-docked-12-pocket10_4iiy-A-rec-3tle-gsu-lig-tt-docked-12.sdf 61.69846749305725

@@ -1,0 +1,6 @@
+Check,Failure Count
+bond_angles,123
+bond_lengths,79
+internal_steric_clash,24
+double_bond_flatness,7
+non-aromatic_ring_non-flatness,6

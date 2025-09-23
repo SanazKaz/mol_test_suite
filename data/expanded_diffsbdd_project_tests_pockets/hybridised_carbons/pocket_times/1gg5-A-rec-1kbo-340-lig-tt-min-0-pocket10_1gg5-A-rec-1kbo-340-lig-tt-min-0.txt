@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1gg5-A-rec-1kbo-340-lig-tt-min-0-pocket10_1gg5-A-rec-1kbo-340-lig-tt-min-0.sdf 49.004467725753784

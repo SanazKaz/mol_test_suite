@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/3gs6-A-rec-2oxn-oan-lig-tt-docked-4-pocket10_3gs6-A-rec-2oxn-oan-lig-tt-docked-4.sdf 45.627805948257446

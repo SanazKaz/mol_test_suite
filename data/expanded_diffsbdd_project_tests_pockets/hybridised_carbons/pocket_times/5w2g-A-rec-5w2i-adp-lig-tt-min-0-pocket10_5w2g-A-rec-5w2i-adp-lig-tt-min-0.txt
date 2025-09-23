@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/5w2g-A-rec-5w2i-adp-lig-tt-min-0-pocket10_5w2g-A-rec-5w2i-adp-lig-tt-min-0.sdf 49.76097917556763

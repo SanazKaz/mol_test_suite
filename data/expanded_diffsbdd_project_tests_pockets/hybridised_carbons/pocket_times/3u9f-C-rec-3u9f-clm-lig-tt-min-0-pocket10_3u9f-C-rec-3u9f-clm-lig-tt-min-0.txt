@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3u9f-C-rec-3u9f-clm-lig-tt-min-0-pocket10_3u9f-C-rec-3u9f-clm-lig-tt-min-0.sdf 54.15620136260986

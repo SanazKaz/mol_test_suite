@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1h36-A-rec-1o79-r23-lig-tt-docked-5-pocket10_1h36-A-rec-1o79-r23-lig-tt-docked-5.sdf 98.08477783203125

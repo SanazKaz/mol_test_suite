@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3jyh-A-rec-3n0t-opy-lig-tt-min-0-pocket10_3jyh-A-rec-3n0t-opy-lig-tt-min-0.sdf 46.93932485580444

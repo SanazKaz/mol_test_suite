@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/1r1h-A-rec-1r1h-bir-lig-tt-docked-1-pocket10_1r1h-A-rec-1r1h-bir-lig-tt-docked-1.sdf 63.46256971359253

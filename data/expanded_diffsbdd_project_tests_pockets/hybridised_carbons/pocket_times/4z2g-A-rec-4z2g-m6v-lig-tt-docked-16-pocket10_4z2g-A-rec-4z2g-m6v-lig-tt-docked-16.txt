@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4z2g-A-rec-4z2g-m6v-lig-tt-docked-16-pocket10_4z2g-A-rec-4z2g-m6v-lig-tt-docked-16.sdf 77.80474591255188

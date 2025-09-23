@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/4h3c-A-rec-5cqj-53q-lig-tt-docked-2-pocket10_4h3c-A-rec-5cqj-53q-lig-tt-docked-2.sdf 37.93904781341553

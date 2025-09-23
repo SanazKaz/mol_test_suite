@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/2e24-A-rec-1j0n-ceg-lig-tt-docked-14-pocket10_2e24-A-rec-1j0n-ceg-lig-tt-docked-14.sdf 40.18760871887207

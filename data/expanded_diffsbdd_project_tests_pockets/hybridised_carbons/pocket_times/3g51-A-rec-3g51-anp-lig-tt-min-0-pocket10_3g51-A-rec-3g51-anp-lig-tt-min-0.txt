@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/3g51-A-rec-3g51-anp-lig-tt-min-0-pocket10_3g51-A-rec-3g51-anp-lig-tt-min-0.sdf 60.676799058914185

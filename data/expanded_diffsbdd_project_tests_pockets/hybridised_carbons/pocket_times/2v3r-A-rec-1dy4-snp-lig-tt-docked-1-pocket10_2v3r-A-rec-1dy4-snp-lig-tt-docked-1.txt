@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/2v3r-A-rec-1dy4-snp-lig-tt-docked-1-pocket10_2v3r-A-rec-1dy4-snp-lig-tt-docked-1.sdf 60.02918291091919

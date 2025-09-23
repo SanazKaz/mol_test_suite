@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/1rs9-A-rec-1dmk-itu-lig-tt-min-0-pocket10_1rs9-A-rec-1dmk-itu-lig-tt-min-0.sdf 25.810555934906006

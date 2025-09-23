@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1phk-A-rec-1phk-atp-lig-tt-min-0-pocket10_1phk-A-rec-1phk-atp-lig-tt-min-0.sdf 68.67049789428711

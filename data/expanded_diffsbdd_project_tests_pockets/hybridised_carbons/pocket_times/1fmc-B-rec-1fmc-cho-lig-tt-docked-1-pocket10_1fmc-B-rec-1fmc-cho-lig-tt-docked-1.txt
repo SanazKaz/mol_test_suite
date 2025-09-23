@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/1fmc-B-rec-1fmc-cho-lig-tt-docked-1-pocket10_1fmc-B-rec-1fmc-cho-lig-tt-docked-1.sdf 51.15809893608093

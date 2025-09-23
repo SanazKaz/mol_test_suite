@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_hybridised/test/4aua-A-rec-4aua-4au-lig-it2-tt-docked-7-pocket10_4aua-A-rec-4aua-4au-lig-it2-tt-docked-7.sdf 34.37328290939331

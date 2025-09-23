@@ -1,0 +1,1 @@
+data/processed_crossdock_noH_full_temp/test/5b08-A-rec-5b09-4mx-lig-tt-min-0-pocket10_5b08-A-rec-5b09-4mx-lig-tt-min-0.sdf 51.32570552825928
