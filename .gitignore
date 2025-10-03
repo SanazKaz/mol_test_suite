@@ -1,3 +1,5 @@
 molecular_suite.egg-info
 *.sdf
 *.pdbrepos/silly_walks/
+data/other_models_data/*
+.vscode/

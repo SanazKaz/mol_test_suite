@@ -1,0 +1,5 @@
+Check,Failure Count
+bond_angles,17
+bond_lengths,15
+internal_steric_clash,7
+double_bond_flatness,2
