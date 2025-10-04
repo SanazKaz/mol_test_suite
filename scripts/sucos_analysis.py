@@ -7,6 +7,10 @@ import matplotlib.pyplot as plt
 from collections import namedtuple
 import pandas as pd
 import csv
+import seaborn as sns
+
+from statannotations.Annotator import Annotator
+from scipy.stats import mannwhitneyu
 
 # ---------- config ----------
 REF_SDF   = "data/similarity_experiments/sucos_sim/sucos_aripip_lr1e-5_ema_mean_experiment/epoch_0000/epoch0_data_drd2_strucutres_processed_ligand_free_pockets_drd2_7e2z_E_9SC_pocket_only.pdb_data_drd2_strucutres_7e2z_E_9SC_lig0_ref.sdf"  # single-mol SDF of the reference pose
@@ -152,16 +156,11 @@ def mw_and_delta(x, y, label):
     print(f"\n=== {label}: PRISM vs DiffSBDD ===")
     x = _as_clean_array(x); y = _as_clean_array(y)
     print(f"n_PRISM={len(x)}, n_DiffSBDD={len(y)}")
-    try:
-        from scipy.stats import mannwhitneyu
-        u = mannwhitneyu(x, y, alternative="two-sided")
-        print(f"Mann–Whitney U: statistic={u.statistic:.4g}, p={u.pvalue:.3g}")
-    except Exception as e:
-        print(f"(Note) SciPy not available or error '{e}'. Could not run Mann–Whitney.")
-        u = None
+    # don't compute/print MW U here; we'll do it silently only for stars
     delta = cliffs_delta(x, y)
     print(f"Cliff's delta: {delta:.3f}  (|δ|≈0.147 small, 0.33 med, 0.474 large)")
-    return u, delta
+    return None, delta
+
 
 u_sucos,  d_sucos  = mw_and_delta(sucos_prism, sucos_diff, "SuCOS")
 u_feat,   d_feat   = mw_and_delta(fm_prism, fm_diff, "Feature score")
@@ -190,57 +189,80 @@ fig, axes = plt.subplots(1, 2, figsize=(10,4))
 two_hist(axes[0], sucos_prism, sucos_diff, bins=20)
 violin(axes[1], [sucos_prism, sucos_diff], ["PRISM", "DiffSBDD"], ylabel="SuCOS")
 
-# Attempt to annotate SuCOS violin with p and delta
 def add_text_annotation(ax, u_res, delta, y_frac=0.95):
-    txt_lines = []
-    if u_res is not None:
-        txt_lines.append(f"MW p={u_res.pvalue:.3g}")
-    txt_lines.append(f"Cliff δ={delta:.3f}")
-    txt = "\n".join(txt_lines)
     ymin, ymax = ax.get_ylim()
-    ax.text(1.02, ymin + y_frac*(ymax-ymin), txt, ha='left', va='top', transform=ax.get_yaxis_transform())
+    ax.text(1.02, ymin + y_frac*(ymax - ymin), f"Cliff δ={delta:.3f}",
+            ha='left', va='top', transform=ax.get_yaxis_transform())
 
-# If statannotations is available, use it for SuCOS; else write text
+# --- SuCOS violin: matplotlib aesthetics + statannotations stars (precomputed p) ---
+from statannotations.Annotator import Annotator
+from scipy.stats import mannwhitneyu
+
+# tidy data for stats/annotation
+data_sucos = pd.DataFrame({
+    "set": (["PRISM"] * len(sucos_prism)) + (["DiffSBDD"] * len(sucos_diff)),
+    "value": np.r_[sucos_prism, sucos_diff],
+})
+# --- SuCOS violin: seaborn (for compatibility) + original look + stars ---
+_pal = {"PRISM": COLOR_PRISM, "DiffSBDD": COLOR_DIFF}
+order = ["PRISM", "DiffSBDD"]
+
+# Tidy data
+data_sucos = pd.DataFrame({
+    "set": (["PRISM"] * len(sucos_prism)) + (["DiffSBDD"] * len(sucos_diff)),
+    "value": np.r_[sucos_prism, sucos_diff],
+})
+
+fig_ann, ax_ann = plt.subplots(1, 1, figsize=(5, 4))
+
+# 1) Draw violins with seaborn so statannotations understands category positions
+#    Use inner=None and manually add mean/median bars to match your style.
+sns.violinplot(
+    data=data_sucos, x="set", y="value",
+    order=order, palette=_pal, cut=0, inner=None, ax=ax_ann, legend=False
+)
+# soften saturation to match your Matplotlib look
+for coll in ax_ann.collections:
+    try:
+        coll.set_alpha(0.6)
+    except Exception:
+        pass
+
+# mean & median bars (center “error bar” look)
+for i, vals in enumerate([sucos_prism, sucos_diff]):
+    vals = np.asarray(vals)
+    med = np.median(vals)
+    mean = np.mean(vals)
+    ax_ann.hlines(med, i-0.28, i+0.28, linewidth=3)         # median bar
+    ax_ann.hlines(mean, i-0.28, i+0.28, linewidth=3, alpha=0.9)  # mean bar
+
+ax_ann.set_ylabel("SuCOS")
+
+# 2) Precompute MW p-value (no printing) and add headroom for the bracket
 try:
-    from statannotations.Annotator import Annotator
-    data_sucos = pd.DataFrame({
-        "set": (["PRISM"]*len(sucos_prism)) + (["DiffSBDD"]*len(sucos_diff)),
-        "value": np.r_[sucos_prism, sucos_diff],
-    })
-    # build a fresh axis for clean annotation
-    fig_ann, ax_ann = plt.subplots(1,1, figsize=(5,4))
-    parts = ax_ann.violinplot([sucos_prism, sucos_diff], showmeans=True, showmedians=True)
-    for pc, color in zip(parts['bodies'], [COLOR_PRISM, COLOR_DIFF]):
-        pc.set_facecolor(color); pc.set_alpha(0.6)
-    ax_ann.set_xticks([1,2]); ax_ann.set_xticklabels(["PRISM","DiffSBDD"])
-    ax_ann.set_ylabel("SuCOS")
-    annot = Annotator(ax_ann, [("PRISM", "DiffSBDD")], data=data_sucos, x="set", y="value", order=["PRISM","DiffSBDD"])
-    annot.configure(test='Mann-Whitney', text_format='simple', loc='inside', show_test_name=False)
-    annot.apply_and_annotate()
-    plt.tight_layout()
-    plt.show()
+    p_sucos = mannwhitneyu(sucos_prism, sucos_diff, alternative="two-sided").pvalue
 except Exception:
-    add_text_annotation(axes[1], u_sucos, d_sucos)
+    p_sucos = np.nan
+
+ymin, ymax = ax_ann.get_ylim()
+ax_ann.set_ylim(ymin, ymax + 0.12*(ymax - ymin))
+
+# 3) Stars only, outside, like in your PB example
+data_sucos["y_pos"] = ax_ann.get_ylim()[1]  # dummy constant for placement
+pairs = [("PRISM", "DiffSBDD")]
+
+annot = Annotator(ax_ann, pairs, data=data_sucos, x="set", y="y_pos", order=order)
+annot.configure(test=None, text_format="star", show_test_name=False, loc="outside", verbose=0)
+annot.set_pvalues([p_sucos])
+annot.annotate()
+
+# 4) Cliff's delta label (kept)
+ax_ann.text(
+    0.5, ymin + 0.93*(ax_ann.get_ylim()[1] - ymin),
+    f"Cliff's δ = {d_sucos:.3f}",
+    ha="center", va="top", fontsize=10, transform=ax_ann.get_yaxis_transform()
+)
 
 plt.tight_layout()
 plt.show()
 
-# 2) Component violins, PRISM first, consistent colors + text annotations
-fig, axes = plt.subplots(1, 2, figsize=(10,4))
-
-parts = axes[0].violinplot([fm_prism, fm_diff], showmeans=True, showmedians=True)
-for pc, color in zip(parts['bodies'], [COLOR_PRISM, COLOR_DIFF]):
-    pc.set_facecolor(color); pc.set_alpha(0.6)
-axes[0].set_xticks([1,2]); axes[0].set_xticklabels(["PRISM","DiffSBDD"])
-axes[0].set_ylabel("Feature Score")
-add_text_annotation(axes[0], u_feat, d_feat)
-
-parts = axes[1].violinplot([shape_prism, shape_diff], showmeans=True, showmedians=True)
-for pc, color in zip(parts['bodies'], [COLOR_PRISM, COLOR_DIFF]):
-    pc.set_facecolor(color); pc.set_alpha(0.6)
-axes[1].set_xticks([1,2]); axes[1].set_xticklabels(["PRISM","DiffSBDD"])
-axes[1].set_ylabel("Shape Overlap")
-add_text_annotation(axes[1], u_shape, d_shape)
-
-plt.tight_layout()
-plt.show()

@@ -12,11 +12,11 @@ This will process all SDF files in the directory and output results to CSV.
 """
 
 import os
-import sys
 import glob
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import sys
 from rdkit import Chem, RDLogger
 from rdkit.Chem import Descriptors, Crippen, Lipinski, QED
 from rdkit import DataStructs
@@ -24,13 +24,22 @@ from tqdm import tqdm
 import itertools
 from typing import List, Sequence, Union
 
-# Import your existing SA scorer
+# Get the directory where this script is located
+script_dir = Path(__file__).resolve().parent
+
+# Add the parent directory of the script to Python's path
+# This allows it to find the 'utils' folder as a top-level module
+sys.path.append(str(script_dir.parent))
+
+# Try to import the real SA scorer
 try:
     from utils.SA_Score.sascorer import calculateScore
 except ImportError:
+    # If it fails, define a placeholder and assign it to the same name
     print("Warning: SA Score module not found. SA scores will be set to 0.")
-    def calculateScore(mol):
+    def placeholder_sascorer(mol):
         return 0
+    calculateScore = placeholder_sascorer
 
 
 class MoleculeNitrogenFixer:
