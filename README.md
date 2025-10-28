@@ -100,9 +100,9 @@ Calculates shape and feature-based similarity to a reference molecule.
 Generates violin plots comparing property distributions across methods with statistical tests (Mann-Whitney U, FDR correction).
 
 #### PoseBusters Comparison
-**Script**: `scripts/plotting/plot_posebusters.py`
+**Script**: `scripts/plotting/martin_style_pb_plot.py`
 
-Creates stacked percentage bar charts of PoseBusters pass/fail rates with chi-squared significance tests.
+Creates stacked percentage bar charts of PoseBusters pass/fail rates with chi-squared significance tests (Martin style with hatched bars).
 
 #### 2D Molecular Grids
 **Script**: `scripts/plotting/mols_2d_display.py`
@@ -186,7 +186,7 @@ python scripts/plotting/property_distribution_plot.py \
 ### PoseBusters Comparison Plots
 
 ```bash
-python scripts/plotting/plot_posebusters.py \
+python scripts/plotting/martin_style_pb_plot.py \
   --input "DiffSBDD" PB_results/DiffSBDD_PB_results.csv \
   --input "PRISM" PB_results/PRISM_PB_results.csv \
   -o figures/pb_comparison.png

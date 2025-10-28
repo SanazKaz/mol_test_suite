@@ -349,7 +349,7 @@ class AnalysisPipeline:
             self.logger.info("\nGenerating PoseBusters comparison plot...")
 
             # Build command with multiple input files
-            cmd = [sys.executable, "scripts/plotting/plot_posebusters.py"]
+            cmd = [sys.executable, "scripts/plotting/martin_style_pb_plot.py"]
 
             for pb_file in pb_results:
                 # Extract method name from filename
