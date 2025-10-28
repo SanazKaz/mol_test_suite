@@ -102,7 +102,7 @@ def draw_sig_bar(ax, x1, x2, y, text, line_height=0.015):
 
 
 # ----------- Core -----------
-def load_and_filter(csv_path: str, property_col: str, pockets: List[str]) -> pd.DataFrame:
+def load_and_filter(csv_path: str, property_col: str, pockets: List[str], methods: List[str]) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     # normalise columns
     required = {"method", "pocket", property_col}
@@ -110,12 +110,12 @@ def load_and_filter(csv_path: str, property_col: str, pockets: List[str]) -> pd.
     if missing:
         raise ValueError(f"Missing columns in CSV: {missing}")
 
-    # normalise method names, keep only PRISM and DiffSBDD
+    # normalise method names
     df["method_norm"] = df["method"].astype(str).str.strip()
-    df.loc[df["method_norm"].str.lower().str.contains("prism"), "method_norm"] = "PRISM"
-    df.loc[df["method_norm"].str.lower().str.contains("diffsbbd"), "method_norm"] = "DiffSBDD"
-
-    df = df[df["method_norm"].isin(["PRISM", "DiffSBDD"])].copy()
+    
+    # Filter to specified methods
+    if methods:
+        df = df[df["method_norm"].isin(methods)].copy()
 
     if pockets:
         pockets_lower = {p.lower() for p in pockets}
@@ -128,17 +128,20 @@ def load_and_filter(csv_path: str, property_col: str, pockets: List[str]) -> pd.
 
 def prepare_data(df: pd.DataFrame, property_col: str, pockets: List[str]) -> Dict[str, Dict[str, np.ndarray]]:
     """
-    Returns dict: pocket -> { "PRISM": values, "DiffSBDD": values }
+    Returns dict: pocket -> { method_name: values }
+    Auto-detects methods present in the data.
     """
     data = {}
+    # Detect all methods present
+    methods = sorted(df["method_norm"].unique())
+    
     # if pockets not provided, use sorted unique pockets present
     pockets_to_plot = pockets or sorted(df["pocket"].unique(), key=str)
     for p in pockets_to_plot:
         sub = df[df["pocket"].astype(str).str.lower() == str(p).lower()]
-        data[p] = {
-            "PRISM": sub[sub["method_norm"] == "PRISM"][property_col].to_numpy(),
-            "DiffSBDD": sub[sub["method_norm"] == "DiffSBDD"][property_col].to_numpy(),
-        }
+        data[p] = {}
+        for method in methods:
+            data[p][method] = sub[sub["method_norm"] == method][property_col].to_numpy()
     return data
 
 
@@ -147,25 +150,44 @@ def compute_stats(data: Dict[str, Dict[str, np.ndarray]]) -> pd.DataFrame:
     Mann–Whitney U, two-sided, per pocket.
     Returns a dataframe with raw and BH-FDR corrected p-values.
     """
+    if not data:
+        return pd.DataFrame()
+    
+    # Get all methods present
+    methods = set()
+    for pocket_data in data.values():
+        methods.update(pocket_data.keys())
+    methods = sorted(methods)
+    
+    # If only one method, no comparison possible
+    if len(methods) < 2:
+        print(f"[INFO] Only one method found ({methods[0]}), skipping statistical comparison.")
+        return pd.DataFrame()
+    
+    # Use first two methods for comparison
+    method_a, method_b = methods[0], methods[1]
+    if len(methods) > 2:
+        print(f"[WARN] More than 2 methods found, comparing {method_a} vs {method_b}")
+    
     if not _HAS_SCIPY:
         print("[WARN] SciPy not found, p-values will be set to NaN.")
         rows = []
         for pocket, d in data.items():
-            n1, n2 = len(d["PRISM"]), len(d["DiffSBDD"])
-            rows.append(dict(pocket=pocket, n_prism=n1, n_diff=n2, p_raw=np.nan, p_fdr=np.nan))
+            n1, n2 = len(d.get(method_a, [])), len(d.get(method_b, []))
+            rows.append(dict(pocket=pocket, n_method_a=n1, n_method_b=n2, p_raw=np.nan, p_fdr=np.nan))
         return pd.DataFrame(rows)
 
     p_raw = []
     rows = []
     for pocket, d in data.items():
-        a = d["PRISM"]
-        b = d["DiffSBDD"]
+        a = d.get(method_a, np.array([]))
+        b = d.get(method_b, np.array([]))
         if len(a) == 0 or len(b) == 0:
-            rows.append(dict(pocket=pocket, n_prism=len(a), n_diff=len(b), p_raw=np.nan))
+            rows.append(dict(pocket=pocket, n_method_a=len(a), n_method_b=len(b), p_raw=np.nan))
             p_raw.append(np.nan)
         else:
             stat = mannwhitneyu(a, b, alternative="two-sided")
-            rows.append(dict(pocket=pocket, n_prism=len(a), n_diff=len(b), p_raw=float(stat.pvalue)))
+            rows.append(dict(pocket=pocket, n_method_a=len(a), n_method_b=len(b), p_raw=float(stat.pvalue)))
             p_raw.append(float(stat.pvalue))
 
     # FDR correction, keep NaNs untouched
@@ -200,6 +222,20 @@ def plot_violins(data: Dict[str, Dict[str, np.ndarray]],
         print("No pockets to plot, aborting.")
         return
 
+    # Detect methods present in data
+    methods = []
+    for pocket_data in data.values():
+        methods = sorted(pocket_data.keys())
+        break
+    
+    if len(methods) == 0:
+        print("No methods found in data, aborting.")
+        return
+    
+    # Define colors for up to 5 methods
+    method_colors = ["orange", "steelblue", "green", "red", "purple"]
+    color_map = {method: method_colors[i % len(method_colors)] for i, method in enumerate(methods)}
+
     fig, axes = plt.subplots(1, n, figsize=(5*n, 5), sharey=True, dpi=300)
 
     # handle the case n == 1
@@ -210,13 +246,13 @@ def plot_violins(data: Dict[str, Dict[str, np.ndarray]],
     y_min_overall = np.inf
 
     for ax, pocket in zip(axes, pockets):
-        prism_vals = data[pocket]["PRISM"]
-        diff_vals  = data[pocket]["DiffSBDD"]
-
-        parts = ax.violinplot([prism_vals, diff_vals], showmeans=True, showmedians=True)
+        # Collect values for all methods
+        method_vals = [data[pocket].get(method, np.array([])) for method in methods]
+        
+        parts = ax.violinplot(method_vals, showmeans=True, showmedians=True)
         # color bodies
-        for pc, color in zip(parts['bodies'], [COLOR_PRISM, COLOR_DIFF]):
-            pc.set_facecolor(color)
+        for i, (pc, method) in enumerate(zip(parts['bodies'], methods)):
+            pc.set_facecolor(color_map[method])
             pc.set_alpha(0.65)
             pc.set_edgecolor("black")
             pc.set_linewidth(0.8)
@@ -227,32 +263,32 @@ def plot_violins(data: Dict[str, Dict[str, np.ndarray]],
                 parts[k].set_linewidth(1.0)
                 parts[k].set_color("black")
 
-        ax.set_xticks([1, 2])
-        ax.set_xticklabels(["PRISM", "DiffSBDD"])
+        ax.set_xticks(list(range(1, len(methods) + 1)))
+        ax.set_xticklabels(methods)
         ax.set_title(str(pocket).upper())
 
         ax.set_ylabel(property_col.upper())
 
         # collect y limits
-        all_vals = np.concatenate([prism_vals, diff_vals]) if (len(prism_vals)+len(diff_vals)) else np.array([0.0])
+        all_vals = np.concatenate([v for v in method_vals if len(v) > 0]) if any(len(v) > 0 for v in method_vals) else np.array([0.0])
         y_min_overall = min(y_min_overall, float(np.nanmin(all_vals)))
         y_max_overall = max(y_max_overall, float(np.nanmax(all_vals)))
 
         # annotate counts
-        n_prism = len(prism_vals)
-        n_diff  = len(diff_vals)
-        ax.text(1, ax.get_ylim()[0], f"n={n_prism}", ha="center", va="bottom", fontsize=10)
-        ax.text(2, ax.get_ylim()[0], f"n={n_diff}", ha="center", va="bottom", fontsize=10)
+        for i, method in enumerate(methods):
+            n = len(method_vals[i])
+            ax.text(i+1, ax.get_ylim()[0], f"n={n}", ha="center", va="bottom", fontsize=10)
 
-        # add significance
-        srow = stats[stats["pocket"].astype(str).str.lower() == str(pocket).lower()]
-        if len(srow) == 1:
-            p_adj = srow["p_fdr"].values[0]
-            label = p_to_stars(p_adj) if np.isfinite(p_adj) else "ns"
-            # compute height slightly above current max
-            y_top = float(np.nanmax(all_vals)) if np.isfinite(np.nanmax(all_vals)) else 0.0
-            pad = (np.abs(y_top) + 1.0) * 0.05
-            draw_sig_bar(ax, 1, 2, y_top + pad, label)
+        # add significance (only if we have stats and exactly 2 methods)
+        if not stats.empty and len(methods) == 2:
+            srow = stats[stats["pocket"].astype(str).str.lower() == str(pocket).lower()]
+            if len(srow) == 1:
+                p_adj = srow["p_fdr"].values[0]
+                label = p_to_stars(p_adj) if np.isfinite(p_adj) else "ns"
+                # compute height slightly above current max
+                y_top = float(np.nanmax(all_vals)) if np.isfinite(np.nanmax(all_vals)) else 0.0
+                pad = (np.abs(y_top) + 1.0) * 0.05
+                draw_sig_bar(ax, 1, 2, y_top + pad, label)
 
     # harmonise y limits with padding
     if np.isfinite(y_min_overall) and np.isfinite(y_max_overall):
@@ -282,6 +318,10 @@ def main():
                     help="Property column to plot")
     ap.add_argument("--pockets", nargs="*", default=None,
                     help="Pocket codes to include, e.g., 6cm4 6luq 6v0u, if omitted, all pockets in CSV are used")
+    ap.add_argument("--methods", nargs="+", default=["PRISM", "DiffSBDD"],
+                    help="Method names to include (default: PRISM DiffSBDD)")
+    ap.add_argument("--output-dir", type=str, default=None,
+                    help="Output directory for plots (default: molecular_property_csvs/plots/)")
     ap.add_argument("--outname", type=str, default=None,
                     help="Output file stem, defaults to <property>_violins")
     args = ap.parse_args()
@@ -290,19 +330,25 @@ def main():
     if not csv_path.is_file():
         raise FileNotFoundError(f"CSV not found: {csv_path}")
 
-    # Figures go next to CSV in a 'plots' folder
-    save_dir = csv_path.parent / "plots"
+    # Use specified output directory or default to plots/ next to CSV
+    if args.output_dir:
+        save_dir = Path(args.output_dir)
+    else:
+        save_dir = csv_path.parent / "plots"
     save_dir.mkdir(parents=True, exist_ok=True)
 
     prop = args.property.lower()
-    df = load_and_filter(str(csv_path), prop, args.pockets)
+    df = load_and_filter(str(csv_path), prop, args.pockets, args.methods)
     data = prepare_data(df, prop, args.pockets)
 
     # Stats and console table
     stats = compute_stats(data)
-    stats = stats.sort_values("pocket")
-    print("\nPer-pocket stats (Mann–Whitney U, two-sided, BH-FDR):")
-    print(stats.to_string(index=False, justify="center"))
+    if not stats.empty:
+        stats = stats.sort_values("pocket")
+        print("\nPer-pocket stats (Mann–Whitney U, two-sided, BH-FDR):")
+        print(stats.to_string(index=False, justify="center"))
+    else:
+        print("\n[INFO] No statistical comparison performed (single method or no data).")
 
     # Plot
     fname_stem = args.outname or f"{prop}_violins"

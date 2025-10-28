@@ -10,6 +10,21 @@ This script orchestrates the complete analysis workflow from SDF files to final 
 5. Comprehensive visualization (property distributions, PoseBusters, 2D grids)
 6. Organized results and summary report
 
+All outputs are saved to a 'results/' subdirectory within the input directory
+to keep your SDF files clean and easy to find.
+
+Output Structure:
+    data/PRISM/
+      ├── PRISM_7t2i_20n.sdf          ← Your data (clean!)
+      ├── PRISM_7t2i_25n.sdf
+      └── results/                     ← All analysis outputs
+          ├── molecular_property_csvs/
+          ├── PB_results/
+          ├── silliness_scores/
+          ├── figures/
+          ├── logs/
+          └── summary_report_*.txt
+
 Usage:
     # Basic usage - analyze a directory
     python main.py --input data/qed_sigmoid/DiffSBDD_test_pockets/
@@ -51,6 +66,7 @@ class AnalysisPipeline:
     def __init__(self, input_path: Path, output_dir: Optional[Path] = None,
                  pockets: Optional[List[str]] = None,
                  properties: Optional[List[str]] = None,
+                 methods: Optional[List[str]] = None,
                  reference_mol: Optional[Path] = None,
                  skip_plots: bool = False):
         """
@@ -61,17 +77,24 @@ class AnalysisPipeline:
             output_dir: Custom output directory (default: use input directory)
             pockets: List of pocket IDs to filter
             properties: List of properties to plot
+            methods: List of method names for comparison plots
             reference_mol: Path to reference molecule for SuCOS analysis
             skip_plots: Skip plotting step
         """
         self.input_path = input_path
-        self.output_dir = output_dir if output_dir else input_path
+        # Use results/ subdirectory for all outputs unless custom output specified
+        if output_dir:
+            self.output_dir = output_dir
+        else:
+            self.output_dir = input_path / "results"
+        
         self.pockets = pockets or []
         self.properties = properties or ["qed", "sa", "logp", "mw"]
+        self.methods = methods or ["PRISM", "DiffSBDD"]
         self.reference_mol = reference_mol
         self.skip_plots = skip_plots
 
-        # Setup directories
+        # Setup directories (all under results/)
         self.props_dir = self.output_dir / "molecular_property_csvs"
         self.pb_dir = self.output_dir / "PB_results"
         self.silliness_dir = self.output_dir / "silliness_scores"
@@ -334,9 +357,12 @@ class AnalysisPipeline:
                     "scripts/plotting/property_distribution_plot.py",
                     "--csv", str(props_csv),
                     "--property", prop,
+                    "--output-dir", str(prop_plots_dir),
                 ]
                 if self.pockets:
                     cmd.extend(["--pockets"] + self.pockets)
+                if self.methods:
+                    cmd.extend(["--methods"] + self.methods)
 
                 if not self._run_command(cmd, f"Property plot: {prop}"):
                     success = False
@@ -527,6 +553,13 @@ Examples:
     )
 
     parser.add_argument(
+        "--methods",
+        nargs="+",
+        default=None,
+        help="Method names for comparison plots (e.g., PRISM DiffSBDD or 7e2z 6cm4)"
+    )
+
+    parser.add_argument(
         "--reference-mol",
         type=Path,
         default=None,
@@ -552,6 +585,7 @@ Examples:
         output_dir=args.output_dir,
         pockets=args.pockets,
         properties=args.properties,
+        methods=args.methods,
         reference_mol=args.reference_mol,
         skip_plots=args.skip_plots
     )

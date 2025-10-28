@@ -2,7 +2,6 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import argparse
-from openbabel import openbabel
 import pandas as pd
 from rdkit import Chem
 from repos.silly_walks.silly_walks_file import SillyWalks

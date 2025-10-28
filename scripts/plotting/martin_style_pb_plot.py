@@ -223,5 +223,3 @@ if __name__ == "__main__":
 # PRISM data/similarity_experiments/sucos_sim/test_time_last_ckpt_gen_100_30nodes/PB_results/SuCOS_7e2z_centered_lr_1e-5_clip_0.1_30_nodes_PB_results.csv
 # DiffSBDD data/qed_sigmoid/DiffSBDD_test_pockets/PB_results/DiffSBDD_7e2z_30_nodes_PB_results.csv
 # -o data/similarity_experiments/sucos_sim/PB_figure_compared_to_DiffSBDD_7e2z
-#
-#
