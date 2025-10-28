@@ -1,4 +1,0 @@
-Method,Total Poses,Passed Poses,Failed Poses,Pass Rate (%)
-PRISM_QED,93,68,25,73.12
-PRISM_SuCOS,100,87,13,87.0
-DiffSBDD,98,58,40,59.18

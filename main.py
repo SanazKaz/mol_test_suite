@@ -7,8 +7,11 @@ This script orchestrates the complete analysis workflow from SDF files to final 
 2. PoseBusters validation
 3. Silliness scoring (molecular diversity)
 4. Optional SuCOS similarity analysis
-5. Comprehensive visualization (property distributions, PoseBusters, 2D grids)
+5. Comprehensive visualization (PoseBusters comparison plots)
 6. Organized results and summary report
+
+Note: Property distribution plots are only generated when comparing multiple methods.
+Use scripts/compare_methods.py for property distribution visualizations.
 
 All outputs are saved to a 'results/' subdirectory within the input directory
 to keep your SDF files clean and easy to find.
@@ -340,36 +343,15 @@ class AnalysisPipeline:
         self._print_header("STEP 5: GENERATING VISUALIZATIONS")
 
         # Create figures directory structure
-        prop_plots_dir = self.figures_dir / "property_distributions"
         pb_plots_dir = self.figures_dir / "posebusters_comparison"
-        prop_plots_dir.mkdir(parents=True, exist_ok=True)
         pb_plots_dir.mkdir(parents=True, exist_ok=True)
 
         success = True
 
-        # 1. Property distribution plots
-        props_csv = self.props_dir / "props_method.csv"
-        if props_csv.exists():
-            self.logger.info("\nGenerating property distribution plots...")
-            for prop in self.properties:
-                cmd = [
-                    sys.executable,
-                    "scripts/plotting/property_distribution_plot.py",
-                    "--csv", str(props_csv),
-                    "--property", prop,
-                    "--output-dir", str(prop_plots_dir),
-                ]
-                if self.pockets:
-                    cmd.extend(["--pockets"] + self.pockets)
-                if self.methods:
-                    cmd.extend(["--methods"] + self.methods)
+        # Note: Property distribution plots are only generated when comparing methods
+        # Use scripts/compare_methods.py for property distribution visualizations
 
-                if not self._run_command(cmd, f"Property plot: {prop}"):
-                    success = False
-        else:
-            self._print_warning(f"Properties CSV not found: {props_csv}")
-
-        # 2. PoseBusters comparison plots
+        # PoseBusters comparison plots
         pb_results = sorted(self.pb_dir.glob("*_PB_results.csv"))
         if len(pb_results) >= 1:
             self.logger.info("\nGenerating PoseBusters comparison plot...")
