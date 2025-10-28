@@ -40,8 +40,20 @@ if __name__ == "__main__":
     parser.add_argument("--sdf", type=str, help="SDF file to process")
     parser.add_argument("--output", type=str, help="Output file", default="None")
     args = parser.parse_args()
+
+    # Read test molecules
     df = read_sdf_with_rdkit(args.sdf)
-    ref_df = pd.read_csv("/Users/sanazkazeminia/Documents/mol_test_suite/repos/silly_walks/chembl_drugs.smi", sep=" ", names=["SMILES", "Name"])
+
+    # Find ChEMBL reference file using relative path from script location
+    script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ref_path = os.path.join(script_dir, "repos", "silly_walks", "chembl_drugs.smi")
+
+    if not os.path.exists(ref_path):
+        print(f"Error: Reference file not found at {ref_path}")
+        print("Please ensure chembl_drugs.smi exists in repos/silly_walks/")
+        sys.exit(1)
+
+    ref_df = pd.read_csv(ref_path, sep=" ", names=["SMILES", "Name"])
     silly_walks = SillyWalks(ref_df)
     df["silly"] = df["SMILES"].apply(silly_walks.score)
     output_path = args.output if args.output else os.path.join(os.path.dirname(args.sdf))
