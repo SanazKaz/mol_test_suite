@@ -34,10 +34,17 @@ from rdkit.Chem import QED, Crippen, Descriptors, Lipinski
 
 # If you have SA_Score in your repo, import it, else fall back gracefully
 try:
-    from analysis.SA_Score.sascorer import calculateScore as _sa_score
+    import sys
+    from pathlib import Path
+    # Add utils directory to path for SA_Score import
+    script_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(script_dir))
+    from utils.SA_Score.sascorer import calculateScore as _sa_score
     _HAS_SA = True
-except Exception:
+except Exception as e:
     _HAS_SA = False
+    print(f"Warning: Could not import SA_Score module: {e}")
+    print("SA scores will not be calculated.")
 
 # ---------- Inference helpers ----------
 def infer_pocket_from_filename(path: str) -> Optional[str]:
